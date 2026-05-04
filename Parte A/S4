@@ -1,1 +1,67 @@
+.data
+N: .word 32
+A: .space 256
+perm: .space 128
 
+.text
+.globl main
+main:
+    lw $s0, N
+    la $s1, A
+    la $s2, perm
+
+    li $t0, 0
+init:
+    bge $t0, $s0, perm_loop
+    sll $t1, $t0, 3
+    add $t2, $s1, $t1
+    mtc1 $t0, $f0
+    cvt.d.w $f0, $f0
+    sdc1 $f0, 0($t2)
+    addi $t0, $t0, 1
+    j init
+
+perm_loop:
+    li $t0, 0
+perm:
+    bge $t0, $s0, rand_loop
+    sub $t1, $s0, $t0
+    addi $t1, $t1, -1
+    sll $t2, $t0, 2
+    add $t3, $s2, $t2
+    sw $t1, 0($t3)
+    addi $t0, $t0, 1
+    j perm
+
+rand_loop:
+    li $t0, 0
+    mtc1 $zero, $f2
+    mtc1 $zero, $f3
+rloop:
+    bge $t0, $s0, seq_loop
+    sll $t1, $t0, 2
+    add $t2, $s2, $t1
+    lw $t3, 0($t2)
+    sll $t4, $t3, 3
+    add $t5, $s1, $t4
+    ldc1 $f0, 0($t5)
+    add.d $f2, $f2, $f0
+    addi $t0, $t0, 1
+    j rloop
+
+seq_loop:
+    li $t0, 0
+    mtc1 $zero, $f4
+    mtc1 $zero, $f5
+sloop:
+    bge $t0, $s0, end
+    sll $t1, $t0, 3
+    add $t2, $s1, $t1
+    ldc1 $f0, 0($t2)
+    add.d $f4, $f4, $f0
+    addi $t0, $t0, 1
+    j sloop
+
+end:
+    li $v0, 10
+    syscall
