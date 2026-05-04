@@ -1,1 +1,59 @@
+.data
+N: .word 32
+A: .space 8192
+B: .space 8192
 
+.text
+.globl main
+main:
+    lw $s0, N
+    la $s1, A
+    la $s2, B
+
+    li $t0, 0
+init_i:
+    bge $t0, $s0, transpose
+    li $t1, 0
+init_j:
+    bge $t1, $s0, next_i
+    mul $t2, $t0, $s0
+    add $t2, $t2, $t1
+    sll $t3, $t2, 3
+    add $t4, $s1, $t3
+    mtc1 $t2, $f0
+    cvt.d.w $f0, $f0
+    sdc1 $f0, 0($t4)
+    addi $t1, $t1, 1
+    j init_j
+next_i:
+    addi $t0, $t0, 1
+    j init_i
+
+transpose:
+    li $t0, 0
+outer_i:
+    bge $t0, $s0, end
+    li $t1, 0
+outer_j:
+    bge $t1, $s0, next_i2
+    mul $t2, $t0, $s0
+    add $t2, $t2, $t1
+    sll $t2, $t2, 3
+    add $t3, $s1, $t2
+    ldc1 $f0, 0($t3)
+
+    mul $t4, $t1, $s0
+    add $t4, $t4, $t0
+    sll $t4, $t4, 3
+    add $t5, $s2, $t4
+    sdc1 $f0, 0($t5)
+
+    addi $t1, $t1, 1
+    j outer_j
+next_i2:
+    addi $t0, $t0, 1
+    j outer_i
+
+end:
+    li $v0, 10
+    syscall
