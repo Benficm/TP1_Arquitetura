@@ -1,1 +1,68 @@
+.data
+N: .word 64
+STRIDE: .word 4
+OFFSET: .word 1
+A: .space 512
 
+.text
+.globl main
+main:
+    lw $s0, N
+    lw $s1, STRIDE
+    lw $s2, OFFSET
+    la $s3, A
+
+    li $t0, 0
+init:
+    bge $t0, $s0, seq_loop
+    sll $t1, $t0, 3
+    add $t2, $s3, $t1
+    mtc1 $t0, $f0
+    cvt.d.w $f0, $f0
+    sdc1 $f0, 0($t2)
+    addi $t0, $t0, 1
+    j init
+
+seq_loop:
+    li $t0, 0
+    mtc1 $zero, $f2
+    mtc1 $zero, $f3
+loop1:
+    bge $t0, $s0, stride_loop
+    sll $t1, $t0, 3
+    add $t2, $s3, $t1
+    ldc1 $f0, 0($t2)
+    add.d $f2, $f2, $f0
+    addi $t0, $t0, 1
+    j loop1
+
+stride_loop:
+    li $t0, 0
+    mtc1 $zero, $f4
+    mtc1 $zero, $f5
+loop2:
+    bge $t0, $s0, offset_loop
+    sll $t1, $t0, 3
+    add $t2, $s3, $t1
+    ldc1 $f0, 0($t2)
+    add.d $f4, $f4, $f0
+    add $t0, $t0, $s1
+    j loop2
+
+offset_loop:
+    li $t0, 0
+    mtc1 $zero, $f6
+    mtc1 $zero, $f7
+loop3:
+    add $t8, $t0, $s2
+    bge $t8, $s0, end
+    sll $t1, $t8, 3
+    add $t2, $s3, $t1
+    ldc1 $f0, 0($t2)
+    add.d $f6, $f6, $f0
+    addi $t0, $t0, 1
+    j loop3
+
+end:
+    li $v0, 10
+    syscall
