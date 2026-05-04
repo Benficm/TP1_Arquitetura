@@ -1,1 +1,75 @@
+.data
+N: .word 16
+A: .space 2048
+B: .space 2048
+C: .space 2048
+
+.text
+.globl main
+main:
+    lw $s0, N
+    la $s1, A
+    la $s2, B
+    la $s3, C
+
+    li $t0, 0
+    mul $t1, $s0, $s0
+init:
+    bge $t0, $t1, compute
+    sll $t2, $t0, 3
+    add $t3, $s1, $t2
+    add $t4, $s2, $t2
+    mtc1 $t0, $f0
+    cvt.d.w $f0, $f0
+    sdc1 $f0, 0($t3)
+    sdc1 $f0, 0($t4)
+    addi $t0, $t0, 1
+    j init
+
+compute:
+    li $t0, 0
+loop_i:
+    bge $t0, $s0, end
+    li $t1, 0
+loop_j:
+    bge $t1, $s0, next_i
+    mtc1 $zero, $f2
+    mtc1 $zero, $f3
+    li $t2, 0
+loop_k:
+    bge $t2, $s0, store
+    mul $t3, $t0, $s0
+    add $t3, $t3, $t2
+    sll $t3, $t3, 3
+    add $t4, $s1, $t3
+    ldc1 $f4, 0($t4)
+
+    mul $t5, $t2, $s0
+    add $t5, $t5, $t1
+    sll $t5, $t5, 3
+    add $t6, $s2, $t5
+    ldc1 $f6, 0($t6)
+
+    mul.d $f8, $f4, $f6
+    add.d $f2, $f2, $f8
+
+    addi $t2, $t2, 1
+    j loop_k
+
+store:
+    mul $t3, $t0, $s0
+    add $t3, $t3, $t1
+    sll $t3, $t3, 3
+    add $t4, $s3, $t3
+    sdc1 $f2, 0($t4)
+
+    addi $t1, $t1, 1
+    j loop_j
+next_i:
+    addi $t0, $t0, 1
+    j loop_i
+
+end:
+    li $v0, 10
+    syscall
 
