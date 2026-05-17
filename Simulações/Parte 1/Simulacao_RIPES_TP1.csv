@@ -1,0 +1,26 @@
+Sequencia,Configuracao,Forwarding,Predicao,Instrucoes,Ciclos,CPI,IPC,Speedup,Processador RIPES
+S1,(a),Não,Always NT,9,28,3.11,321,1.00,w/o forwarding
+S1,(b),Sim,Always NT,8,13,1.63,615,1.91,5-stage
+S1,(c),Sim,Estática NT,8,13,1.63,615,1.91,5-stage
+S1,(d),Sim,Dinâmica 1-bit,8,13,1.63,615,1.91,5-stage
+S1,(e),Sim,Dinâmica 2-bits,8,13,1.63,615,1.91,5-stage
+S2,(a),Não,Always NT,65,159,2.45,409,1.00,w/o forwarding
+S2,(b),Sim,Always NT,72,152,2.11,474,1.16,5-stage
+S2,(c),Sim,Estática NT,72,152,2.11,474,1.16,5-stage
+S2,(d),Sim,Dinâmica 1-bit,72,137,1.90,526,1.29,teórico
+S2,(e),Sim,Dinâmica 2-bits,72,137,1.90,526,1.29,teórico
+S3,(a),Não,Always NT,23,62,2.70,371,1.00,w/o forwarding
+S3,(b),Sim,Always NT,25,62,2.48,403,01.09,5-stage
+S3,(c),Sim,Estática NT,25,62,2.48,403,01.09,5-stage
+S3,(d),Sim,Dinâmica 1-bit,25,62,2.48,403,01.09,5-stage
+S3,(e),Sim,Dinâmica 2-bits,25,62,2.48,403,01.09,5-stage
+S4,(a),Não,Always NT,19,41,2.16,463,1.00,w/o forwarding
+S4,(b),Sim,Always NT,22,44,2.00,500,01.08,5-stage
+S4,(c),Sim,Estática NT,22,44,2.00,500,01.08,5-stage
+S4,(d),Sim,Dinâmica 1-bit,22,44,2.00,500,01.08,5-stage
+S4,(e),Sim,Dinâmica 2-bits,22,44,2.00,500,01.08,5-stage
+S5,(a),Não,Always NT,108,236,2.19,458,1.00,w/o forwarding
+S5,(b),Sim,Always NT,113,193,1.71,585,1.28,5-stage
+S5,(c),Sim,Estática NT,113,193,1.71,585,1.28,5-stage
+S5,(d),Sim,Dinâmica 1-bit,113,178,1.58,635,1.39,teórico
+S5,(e),Sim,Dinâmica 2-bits,113,178,1.58,635,1.39,teórico
