@@ -21,8 +21,8 @@ O objetivo deste projeto é analisar o Paralelismo a Nível de Instruções (ILP
 * `/Gráficos/`: Diretório gerado automaticamente contendo os gráficos de CPI e Speedup.
 * `Simulacao_RIPES_TP1.csv`: Tabela com os dados brutos (Ciclos, Instruções, CPI, IPC) extraídos do simulador.
 * `graphs.py`: Script de automação para plotagem dos gráficos analíticos.
-* `/Relatórios/``relatorio_final.tex`: Código-fonte em LaTeX do relatório técnico.
-* `/Relatórios/``relatorio_final.pdf`: Versão final compilada do relatório.
+* `/Relatórios/` `relatorio_final.tex`: Código-fonte em LaTeX do relatório técnico.
+* `/Relatórios/` `relatorio_final.pdf`: Versão final compilada do relatório.
 
 ## 🚀 Como Reproduzir os Resultados
 
